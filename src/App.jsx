@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
-import html2canvas from 'html2canvas'
 import './App.css'
 
 const BOARD_SIZE = 20
@@ -178,7 +177,7 @@ function Petals() {
 }
 
 /* ── Love Letter overlay ── */
-function LoveLetter({ playerName, onClose, onScreenshot }) {
+function LoveLetter({ playerName, onClose }) {
   return (
     <div className="overlay letter-overlay">
       <div className="letter-card">
@@ -193,18 +192,19 @@ function LoveLetter({ playerName, onClose, onScreenshot }) {
             </p>
           ))}
           <p className="letter-sign" style={{ animationDelay: `${LEVELS.length * 0.6}s` }}>
-            —— 你的小蛇 🐍�
+            —— 你的小蛇 🐍💕
           </p>
         </div>
         <div className="level-clear-buttons">
           <button className="restart-btn letter-close-btn" onClick={onClose}>
             收下这封信 💌
           </button>
-          <button className="restart-btn secondary-btn" onClick={onScreenshot}>
-            📸 截图分享
-          </button>
         </div>
       </div>
+      <footer className="overlay-footer">
+        <div>💘 Designed & Developed by <strong>Chujie_X</strong> | <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+        <div>Powered by Claude Opus 4.6 × Windsurf | Valentine's Day 2026</div>
+      </footer>
     </div>
   )
 }
@@ -590,30 +590,6 @@ function App() {
     setIsRunning(false)
   }
 
-  const takeScreenshot = async () => {
-    try {
-      const canvas = await html2canvas(document.body, {
-        backgroundColor: '#0d0614',
-        width: window.innerWidth,
-        height: window.innerHeight,
-        windowWidth: window.innerWidth,
-        windowHeight: window.innerHeight,
-        scale: 2,
-        useCORS: true,
-        logging: false,
-      })
-      const dataUrl = canvas.toDataURL('image/png')
-      // desktop: trigger download
-      const link = document.createElement('a')
-      link.download = 'valentine-snake.png'
-      link.href = dataUrl
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    } catch (err) {
-      console.error('Screenshot failed:', err)
-    }
-  }
 
   /* ── virtual joystick ── */
   const handleJoystick = (dir) => {
@@ -783,6 +759,10 @@ function App() {
                 回到首页
               </button>
             </div>
+            <footer className="overlay-footer">
+              <div>💘 Designed & Developed by <strong>Chujie_X</strong> | <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+              <div>Powered by Claude Opus 4.6 × Windsurf | Valentine’s Day 2026</div>
+            </footer>
           </div>
         )}
 
@@ -801,15 +781,16 @@ function App() {
                 <button className="restart-btn" onClick={goNextLevel}>
                   {level + 1 < LEVELS.length ? '下一章 →' : '完成旅程 →'}
                 </button>
-                <button className="restart-btn secondary-btn" onClick={takeScreenshot}>
-                  📸 截图分享
-                </button>
                 <button className="restart-btn secondary-btn" onClick={goHome}>
                   回到首页
                 </button>
               </div>
               <p className="hint">按空格键 / 回车继续</p>
             </div>
+            <footer className="overlay-footer">
+              <div>💘 Designed & Developed by <strong>Chujie_X</strong> | <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+              <div>Powered by Claude Opus 4.6 × Windsurf | Valentine’s Day 2026</div>
+            </footer>
           </div>
         )}
 
@@ -832,9 +813,6 @@ function App() {
                 <button className="restart-btn" onClick={() => setShowLetter(true)}>
                   打开情书 💌
                 </button>
-                <button className="restart-btn secondary-btn" onClick={takeScreenshot}>
-                  📸 截图分享
-                </button>
               </div>
               <div className="level-clear-buttons">
                 <button className="restart-btn secondary-btn" onClick={restartGame}>
@@ -845,12 +823,16 @@ function App() {
                 </button>
               </div>
             </div>
+            <footer className="overlay-footer">
+              <div>💘 Designed & Developed by <strong>Chujie_X</strong> | <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+              <div>Powered by Claude Opus 4.6 × Windsurf | Valentine’s Day 2026</div>
+            </footer>
           </div>
         )}
 
         {/* ── Love letter ── */}
         {showLetter && (
-          <LoveLetter playerName={playerName} onClose={() => setShowLetter(false)} onScreenshot={takeScreenshot} />
+          <LoveLetter playerName={playerName} onClose={goHome} />
         )}
 
         {/* ── Game over ── */}
@@ -876,6 +858,10 @@ function App() {
               </div>
               <p className="hint">按空格键重新开始</p>
             </div>
+            <footer className="overlay-footer">
+              <div>💘 Designed & Developed by <strong>Chujie_X</strong> | <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+              <div>Powered by Claude Opus 4.6 × Windsurf | Valentine’s Day 2026</div>
+            </footer>
           </div>
         )}
       </div>
