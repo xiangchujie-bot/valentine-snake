@@ -25,10 +25,10 @@ const LEVELS = [
     chapter: 'Chapter I',
     chapterName: '心动信号',
     chapterEn: 'First Flutter',
-    desc: '有些光芯在闪，像不像谁的眼睛…',
-    reveal: '一颗心 —— 有人偷偷藏了一份心动，你发现了吗？',
-    revealEn: 'A heart — someone hid a secret crush, did you notice?',
-    letterLine: '有些心动，从一个眼神开始，就再也收不回来',
+    desc: '有些光点在闪，像极了某个人看你时的样子…',
+    reveal: '一颗心 —— 被你发现了，怎么办？',
+    revealEn: 'A heart — you caught me, now what?',
+    letterLine: '明明只是多看了你一眼，心就不听话了',
     speed: 160,
     color: '#ff4081',
     points: [
@@ -45,10 +45,10 @@ const LEVELS = [
     chapter: 'Chapter II',
     chapterName: '暗号纽放',
     chapterEn: 'A Rose in Secret',
-    desc: '有什么在悄悄绽放，像某个人的心思…',
-    reveal: '一朵玫瑰 —— 有些话不说出口，就折成了花',
-    revealEn: 'A rose — some words left unsaid become flowers',
-    letterLine: '想送你一朵花，又怕你猜到我的心思',
+    desc: '有什么在偷偷长出来，大概是藏不住的心思吧…',
+    reveal: '一朵玫瑰 —— 假装是随手摘的，其实挑了好久',
+    revealEn: 'A rose — pretended it was random, actually picked it just for you',
+    letterLine: '路过花店都在想，你会不会喜欢这一朵呀',
     speed: 150,
     color: '#e91e63',
     points: [
@@ -64,10 +64,10 @@ const LEVELS = [
     chapter: 'Chapter III',
     chapterName: '欲言又止',
     chapterEn: 'Almost Said It',
-    desc: '这一关藏着一句话，你敢不敢听…',
-    reveal: 'L-O-V-E —— 想说一万次，每次都假装不经意',
-    revealEn: 'L-O-V-E — wanted to say it a thousand times, always pretending not to',
-    letterLine: '有四个字母到了嘴边，又被心跳声压了回去',
+    desc: '这一关有句话，说出来就回不去了…',
+    reveal: 'L-O-V-E —— 打了又删，删了又打，最后还是发给你了',
+    revealEn: 'Typed it, deleted it, typed it again… and finally hit send',
+    letterLine: '每次和你聊天，都在认真思考组织措辞',
     speed: 140,
     color: '#c44dff',
     points: [
@@ -82,10 +82,10 @@ const LEVELS = [
     chapter: 'Chapter IV',
     chapterName: '小小约定',
     chapterEn: 'A Little Promise',
-    desc: '最后一关，有人在等你的答案…',
-    reveal: '一枚戒指 —— 不是承诺，是想和你多走一步的勇气',
-    revealEn: 'A ring — not a promise, just the courage to take one more step with you',
-    letterLine: '不敢说永远，但想和你多走一步，再多一步',
+    desc: '最后一关了，你确定要打开吗…',
+    reveal: '一枚戒指 —— 你不用说什么，笑一下就够了',
+    revealEn: 'A ring — you don\'t have to say anything, just smile',
+    letterLine: '但以后的事以后再说，今晚，想和你多待一会儿',
     speed: 130,
     color: '#ffd700',
     points: [
@@ -182,10 +182,10 @@ function LoveLetter({ playerName, onClose, onScreenshot }) {
   return (
     <div className="overlay letter-overlay">
       <div className="letter-card">
-        <div className="letter-header">💌 A Letter Left Unsaid</div>
+        <div className="letter-header">💌 A Letter I Send Today</div>
         <div className="letter-body">
           {playerName && (
-            <p className="letter-dear">Dear {playerName}，这封信我写了很久：</p>
+            <p className="letter-dear">Dear {playerName}，犹豫了很久，还是写了：</p>
           )}
           {LEVELS.map((lvl, i) => (
             <p key={i} className="letter-line" style={{ animationDelay: `${i * 0.6}s` }}>
@@ -193,7 +193,7 @@ function LoveLetter({ playerName, onClose, onScreenshot }) {
             </p>
           ))}
           <p className="letter-sign" style={{ animationDelay: `${LEVELS.length * 0.6}s` }}>
-            —— 那个不敢开口的人，留 🐍💗
+            —— 你的小蛇 🐍�
           </p>
         </div>
         <div className="level-clear-buttons">
@@ -820,10 +820,10 @@ function App() {
               <div className="all-complete-emojis">💖🌹💕💍</div>
               <h2>✨ 旅程终章 ✨</h2>
               {playerName && (
-                <p className="all-complete-name">{playerName}，这些都是想对你说的</p>
+                <p className="all-complete-name">{playerName}，你看完啦，现在轮到你了哦</p>
               )}
-              <p className="all-complete-msg">四个故事，藏着一个不敢说出口的秘密</p>
-              <p className="all-complete-en">Four stories, one secret I never dared to tell</p>
+              <p className="all-complete-msg">四个故事讲完了，接下来的故事，要不要一起写</p>
+              <p className="all-complete-en">Four stories told, the next one — shall we write it together?</p>
               <p className="final-score">最终得分：{score}</p>
               {score >= highScore && score > 0 && (
                 <p className="new-record">🎉 新纪录！</p>
