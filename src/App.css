@@ -797,103 +797,207 @@
 
 @media (max-width: 600px) {
   .game-container {
-    padding: 10px 8px;
-    gap: 10px;
+    padding: 6px 4px;
+    gap: 6px;
   }
   .game-title {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     letter-spacing: 2px;
   }
   .level-indicator {
-    gap: 14px;
+    gap: 10px;
   }
   .level-emoji {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
   .score-board {
-    gap: 4px;
+    gap: 3px;
     flex-wrap: wrap;
     justify-content: center;
   }
   .score-item {
-    padding: 4px 10px;
-    border-radius: 10px;
+    padding: 3px 8px;
+    border-radius: 8px;
   }
   .score-label {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     letter-spacing: 1px;
   }
   .score-value {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
   .board-wrapper {
-    border-radius: 10px;
+    border-radius: 8px;
   }
   .board {
-    border-radius: 10px;
+    border-radius: 8px;
     border-width: 2px;
   }
   .food-emoji {
-    font-size: 14px;
+    font-size: 12px;
+  }
+  .overlay {
+    padding: 8px;
   }
   .game-over-panel {
-    padding: 20px 16px;
-    max-width: 90vw;
-    border-radius: 14px;
+    padding: 16px 14px;
+    max-width: 92vw;
+    border-radius: 12px;
   }
   .game-over-panel h2 {
-    font-size: 1.4rem;
+    font-size: 1.15rem;
+    margin-bottom: 6px;
   }
   .final-score {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .new-record {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+  .level-info-text {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+  .gameover-en {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+  .controls-hint {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
   }
   .restart-btn {
-    padding: 10px 28px;
-    font-size: 1rem;
+    padding: 8px 22px;
+    font-size: 0.9rem;
+    margin-top: 6px;
   }
   .level-clear-buttons {
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+    margin-top: 6px;
   }
-  .chapter-card {
-    padding: 24px 20px;
+  .hint {
+    margin-top: 8px;
+    font-size: 0.75rem;
   }
-  .chapter-emoji-big {
-    font-size: 3rem;
+  /* welcome */
+  .welcome-emoji {
+    font-size: 2rem;
+    margin-bottom: 4px;
   }
-  .chapter-title {
-    font-size: 1.5rem;
-  }
-  .letter-card {
-    padding: 20px 16px;
-    max-width: 90vw;
-  }
-  .letter-header {
-    font-size: 1.4rem;
-  }
-  .letter-line {
+  .welcome-subtitle {
     font-size: 0.95rem;
   }
-  .welcome-emoji {
-    font-size: 2.5rem;
+  .welcome-en {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+  .name-input-area {
+    margin: 8px 0;
+  }
+  .name-label {
+    font-size: 0.8rem;
   }
   .name-input {
-    max-width: 200px;
-    padding: 10px 14px;
+    max-width: 190px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+  /* chapter intro */
+  .chapter-card {
+    padding: 16px 14px;
+    max-width: 92vw;
+  }
+  .chapter-number {
+    font-size: 0.75rem;
+    margin-bottom: 6px;
+  }
+  .chapter-emoji-big {
+    font-size: 2.2rem;
+    margin-bottom: 6px;
+  }
+  .chapter-title {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+  }
+  .chapter-en {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  .chapter-desc {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+  }
+  /* level clear */
+  .level-clear-emoji {
+    font-size: 2.2rem;
+    margin-bottom: 6px;
+  }
+  .level-reveal-text {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+  .level-reveal-en {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+  .level-for-name {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+  /* all complete */
+  .all-complete-emojis {
+    font-size: 2rem;
+    margin-bottom: 6px;
+    letter-spacing: 4px;
+  }
+  .all-complete-name {
     font-size: 1rem;
   }
-  .game-footer {
-    font-size: 0.7rem;
+  .all-complete-msg {
+    font-size: 0.95rem;
+  }
+  .all-complete-en {
+    font-size: 0.85rem;
+  }
+  /* letter */
+  .letter-card {
+    padding: 16px 14px;
+    max-width: 92vw;
+  }
+  .letter-header {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+  .letter-dear {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+  .letter-line {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  .letter-sign {
+    font-size: 0.85rem;
     margin-top: 12px;
   }
+  /* footer */
+  .game-footer {
+    font-size: 0.65rem;
+    margin-top: 8px;
+  }
+  /* joystick */
   .joy-btn {
-    width: 46px;
-    height: 46px;
-    font-size: 1.2rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+    border-radius: 10px;
   }
   .joy-center {
-    width: 46px;
-    height: 46px;
-    font-size: 1.3rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
   }
 }

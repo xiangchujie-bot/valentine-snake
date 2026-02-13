@@ -882,11 +882,8 @@ function App() {
 
       {/* ── Footer ── */}
       <footer className="game-footer">
-        <span>💘 Designed & Developed by <strong>Chujie_X</strong></span>
-        <span> | </span>
-        <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <span> | </span>
-        <span>Valentine's Day 2026</span>
+        <div>💘 Designed & Developed by <strong>Chujie_X</strong> | <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+        <div>Powered by Claude Opus 4.6 × Windsurf | Valentine's Day 2026</div>
       </footer>
     </div>
   )
