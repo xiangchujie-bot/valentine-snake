@@ -225,6 +225,10 @@ function ChapterIntro({ level, onStart }) {
         </button>
         <p className="hint">按空格键 / 回车开始</p>
       </div>
+      <footer className="overlay-footer">
+        <div>💘 Designed & Developed by <strong>Chujie_X</strong> | <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+        <div>Powered by Claude Opus 4.6 × Windsurf | Valentine’s Day 2026</div>
+      </footer>
     </div>
   )
 }
@@ -754,6 +758,10 @@ function App() {
               </button>
               <p className="hint">WASD / 方向键 / 触屏滑动均可操控</p>
             </div>
+            <footer className="overlay-footer">
+              <div>💘 Designed & Developed by <strong>Chujie_X</strong> | <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+              <div>Powered by Claude Opus 4.6 × Windsurf | Valentine’s Day 2026</div>
+            </footer>
           </div>
         )}
 

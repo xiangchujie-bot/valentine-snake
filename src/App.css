@@ -790,6 +790,32 @@
   text-decoration: underline;
 }
 
+.overlay-footer {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  font-size: 0.75rem;
+  color: #9a6a80;
+  text-align: center;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+.overlay-footer strong {
+  color: #ff6b9d;
+}
+
+.overlay-footer a {
+  color: #c44dff;
+  text-decoration: none;
+}
+
+.overlay-footer a:hover {
+  color: #ff6b9d;
+  text-decoration: underline;
+}
+
 /* ══════════════════════════════════════ */
 /*          Responsive (Mobile)          */
 /* ══════════════════════════════════════ */
@@ -986,6 +1012,10 @@
   .game-footer {
     font-size: 0.65rem;
     margin-top: 8px;
+  }
+  .overlay-footer {
+    font-size: 0.6rem;
+    bottom: 10px;
   }
   /* joystick */
   .joy-btn {
