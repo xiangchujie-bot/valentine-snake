@@ -23,12 +23,12 @@ const LEVELS = [
   {
     emoji: '💖',
     chapter: 'Chapter I',
-    chapterName: '心意初现',
-    chapterEn: 'A Heart Appears',
-    desc: '收集所有闪光，看看会出现什么…',
-    reveal: '原来是一颗爱心！这是给你的心意',
-    revealEn: 'A heart — my feelings for you',
-    letterLine: '第一次心动，是因为你的笑容',
+    chapterName: '心之所向',
+    chapterEn: 'Where the Heart Goes',
+    desc: '星光在闪烁，收集它们，看看藏着什么…',
+    reveal: '原来是一颗心 —— 每个人心里，都住着一份柔软',
+    revealEn: 'A heart — everyone carries a softness within',
+    letterLine: '旅程的起点，是学会对世界心动',
     speed: 160,
     color: '#ff4081',
     points: [
@@ -43,12 +43,12 @@ const LEVELS = [
   {
     emoji: '🌹',
     chapter: 'Chapter II',
-    chapterName: '浪漫绽放',
-    chapterEn: 'Romance Blooms',
-    desc: '继续探索，惊喜正在绽放…',
-    reveal: '一朵玫瑰为你盛开',
-    revealEn: 'A rose, blooming just for you',
-    letterLine: '想送你全世界的花，但你比花更美',
+    chapterName: '花开有时',
+    chapterEn: 'A Time to Bloom',
+    desc: '继续前行，有什么正在悄悄绽放…',
+    reveal: '一朵玫瑰 —— 献给每一个认真生活的人',
+    revealEn: 'A rose — for everyone who lives with heart',
+    letterLine: '认真生活的人，值得世间所有温柔',
     speed: 150,
     color: '#e91e63',
     points: [
@@ -62,12 +62,12 @@ const LEVELS = [
   {
     emoji: '💕',
     chapter: 'Chapter III',
-    chapterName: '表白宣言',
-    chapterEn: 'A Declaration',
-    desc: '这一关藏着一句话，吃完就知道…',
-    reveal: '是 LOVE！想对你说的那四个字母',
-    revealEn: 'L-O-V-E — the word I want to say',
-    letterLine: '千言万语，不如这四个字母',
+    chapterName: '四字心语',
+    chapterEn: 'Four Letters',
+    desc: '快要到了，这一关藏着一个秘密…',
+    reveal: 'L-O-V-E —— 四个字母，是世上最温暖的咒语',
+    revealEn: 'Four letters — the warmest spell in the world',
+    letterLine: '爱不是占有，是每一个平凡日子里的闪光',
     speed: 140,
     color: '#c44dff',
     points: [
@@ -80,12 +80,12 @@ const LEVELS = [
   {
     emoji: '💍',
     chapter: 'Chapter IV',
-    chapterName: '终极承诺',
-    chapterEn: 'The Promise',
-    desc: '最后的秘密，即将揭晓…',
-    reveal: '一枚钻戒！你愿意吗？',
-    revealEn: 'A ring — will you say yes?',
-    letterLine: '余生，想和你一起度过每一天',
+    chapterName: '未来可期',
+    chapterEn: 'A Beautiful Tomorrow',
+    desc: '最后一章，答案即将揭晓…',
+    reveal: '一枚戒指 —— 是对美好未来的小小期许',
+    revealEn: 'A ring — a quiet wish for a beautiful tomorrow',
+    letterLine: '愿你被这世界温柔以待，今天，明天，每一天',
     speed: 130,
     color: '#ffd700',
     points: [
@@ -182,10 +182,10 @@ function LoveLetter({ playerName, onClose, onScreenshot }) {
   return (
     <div className="overlay letter-overlay">
       <div className="letter-card">
-        <div className="letter-header">💌 A Letter For You</div>
+        <div className="letter-header">💌 A Letter From This Journey</div>
         <div className="letter-body">
           {playerName && (
-            <p className="letter-dear">亲爱的 {playerName}：</p>
+            <p className="letter-dear">Dear {playerName}，这封信写给此刻的你：</p>
           )}
           {LEVELS.map((lvl, i) => (
             <p key={i} className="letter-line" style={{ animationDelay: `${i * 0.6}s` }}>
@@ -193,7 +193,7 @@ function LoveLetter({ playerName, onClose, onScreenshot }) {
             </p>
           ))}
           <p className="letter-sign" style={{ animationDelay: `${LEVELS.length * 0.6}s` }}>
-            —— 你的小蛇 🐍💕
+            —— 这条小蛇，和它走过的四季 🐍✨
           </p>
         </div>
         <div className="level-clear-buttons">
@@ -590,13 +590,38 @@ function App() {
     const el = document.querySelector('.game-container')
     if (!el) return
     try {
-      const canvas = await html2canvas(el, { backgroundColor: '#0d0614', scale: 2 })
-      const link = document.createElement('a')
-      link.download = 'valentine-snake.png'
-      link.href = canvas.toDataURL()
-      link.click()
+      const canvas = await html2canvas(el, {
+        backgroundColor: '#0d0614',
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+      })
+      canvas.toBlob((blob) => {
+        if (!blob) return
+        const url = URL.createObjectURL(blob)
+        // try download first (works on desktop)
+        const link = document.createElement('a')
+        link.download = 'valentine-snake.png'
+        link.href = url
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        // also open in new tab as fallback (mobile: long-press to save)
+        setTimeout(() => {
+          const w = window.open('')
+          if (w) {
+            w.document.write(
+              `<html><head><title>Valentine Snake</title><meta name="viewport" content="width=device-width,initial-scale=1"></head>` +
+              `<body style="margin:0;background:#0d0614;display:flex;justify-content:center;align-items:center;min-height:100vh">` +
+              `<img src="${url}" style="max-width:100%;height:auto"/></body></html>`
+            )
+            w.document.close()
+          }
+        }, 300)
+      }, 'image/png')
     } catch (err) {
       console.error('Screenshot failed:', err)
+      alert('截图失败，请尝试手动截屏')
     }
   }
 
@@ -782,11 +807,6 @@ function App() {
                 <button className="restart-btn" onClick={goNextLevel}>
                   {level + 1 < LEVELS.length ? '下一章 →' : '完成旅程 →'}
                 </button>
-                <button className="restart-btn secondary-btn" onClick={restartCurrentLevel}>
-                  再玩一次
-                </button>
-              </div>
-              <div className="level-clear-buttons">
                 <button className="restart-btn secondary-btn" onClick={takeScreenshot}>
                   📸 截图分享
                 </button>
@@ -804,12 +824,12 @@ function App() {
           <div className="overlay all-complete-overlay">
             <div className="game-over-panel all-complete-panel">
               <div className="all-complete-emojis">💖🌹💕💍</div>
-              <h2>🎉 旅程完成！🎉</h2>
+              <h2>✨ 旅程终章 ✨</h2>
               {playerName && (
-                <p className="all-complete-name">给 {playerName} 的惊喜之旅</p>
+                <p className="all-complete-name">{playerName}，这段旅程为你而写</p>
               )}
-              <p className="all-complete-msg">四段心意，一份真情</p>
-              <p className="all-complete-en">Four chapters, one love story</p>
+              <p className="all-complete-msg">四个故事，一封写给生活的情书</p>
+              <p className="all-complete-en">Four stories, a love letter to life</p>
               <p className="final-score">最终得分：{score}</p>
               {score >= highScore && score > 0 && (
                 <p className="new-record">🎉 新纪录！</p>
@@ -856,13 +876,10 @@ function App() {
                 <button className="restart-btn" onClick={restartCurrentLevel}>
                   重试本章
                 </button>
-                <button className="restart-btn secondary-btn" onClick={restartGame}>
-                  从头开始
+                <button className="restart-btn secondary-btn" onClick={goHome}>
+                  回到首页
                 </button>
               </div>
-              <button className="restart-btn secondary-btn" onClick={goHome} style={{marginTop:'8px'}}>
-                回到首页
-              </button>
               <p className="hint">按空格键重新开始</p>
             </div>
           </div>
