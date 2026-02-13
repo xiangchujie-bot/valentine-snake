@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
+import { startBGM, stopBGM, startHeartbeat, stopHeartbeat, playHeartbeatBurst, resumeAudio } from './audio'
 import './App.css'
 
 const BOARD_SIZE = 20
@@ -24,10 +25,11 @@ const LEVELS = [
     chapter: 'Chapter I',
     chapterName: '心动信号',
     chapterEn: 'First Flutter',
-    desc: '有些光点在闪，像极了某个人看你时的样子…',
-    reveal: '一颗心 —— 被你发现了，怎么办？',
-    revealEn: 'A heart — you caught me, now what?',
-    letterLine: '明明只是多看了你一眼，心就不听话了',
+    desc: '有些光芯在闪，像不像谁的眼睛…',
+    descHint: '带着你的小蛇去玩吧，你会发现…',
+    reveal: '一颗心——有人的心跳声，被发现了，怎么办？',
+    revealEn: 'A heart — my heartbeat got caught, now what?',
+    letterLine: '明明只是多看了一眼，心就不听话了',
     speed: 160,
     color: '#ff4081',
     points: [
@@ -44,10 +46,11 @@ const LEVELS = [
     chapter: 'Chapter II',
     chapterName: '暗号纽放',
     chapterEn: 'A Rose in Secret',
-    desc: '有什么在偷偷长出来，大概是藏不住的心思吧…',
-    reveal: '一朵玫瑰 —— 假装是随手摘的，其实挑了好久',
-    revealEn: 'A rose — pretended it was random, actually picked it just for you',
-    letterLine: '路过花店都在想，你会不会喜欢这一朵呀',
+    desc: '有什么在偷偷长出来，大概是藏不住的心思…',
+    descHint: '带着你的小蛇去玩吧，你会发现…',
+    reveal: '一朵花花 —— 假装是随手摘的，其实挑了很久',
+    revealEn: 'A flower — pretended it was random, actually spent ages picking it',
+    letterLine: '路过花店都在想，你会不会喜欢这一朵',
     speed: 150,
     color: '#e91e63',
     points: [
@@ -64,9 +67,10 @@ const LEVELS = [
     chapterName: '欲言又止',
     chapterEn: 'Almost Said It',
     desc: '这一关有句话，说出来就回不去了…',
-    reveal: 'L-O-V-E —— 打了又删，删了又打，最后还是发给你了',
-    revealEn: 'Typed it, deleted it, typed it again… and finally hit send',
-    letterLine: '每次和你聊天，都在认真思考组织措辞',
+    descHint: '带着你的小蛇去玩吧，你会发现…',
+    reveal: 'L-O-V-E——会说万万次，每次都假装不经意',
+    revealEn: 'L-O-V-E — would say it a million times, always playing it cool',
+    letterLine: '每次和你聊天话到嘴边，会和心跳声一起砰砰',
     speed: 140,
     color: '#c44dff',
     points: [
@@ -82,9 +86,10 @@ const LEVELS = [
     chapterName: '小小约定',
     chapterEn: 'A Little Promise',
     desc: '最后一关了，你确定要打开吗…',
-    reveal: '一枚戒指 —— 你不用说什么，笑一下就够了',
-    revealEn: 'A ring — you don\'t have to say anything, just smile',
-    letterLine: '但以后的事以后再说，今晚，想和你多待一会儿',
+    descHint: '带着你的小蛇去玩吧，你会发现…',
+    reveal: '一枚ring —— 不用说什么，环环相扣就够了',
+    revealEn: 'A ring — no words needed, just intertwined',
+    letterLine: '更久以后的事以后再说，今晚，只想和你多待一会儿',
     speed: 130,
     color: '#ffd700',
     points: [
@@ -178,22 +183,42 @@ function Petals() {
 
 /* ── Love Letter overlay ── */
 function LoveLetter({ playerName, onClose }) {
+  const [activeLetter, setActiveLetter] = useState(0)
+  const currentLvl = LEVELS[activeLetter]
+
+  useEffect(() => {
+    startHeartbeat()
+    return () => stopHeartbeat()
+  }, [])
+
   return (
     <div className="overlay letter-overlay">
       <div className="letter-card">
         <div className="letter-header">💌 A Letter I Send Today</div>
         <div className="letter-body">
           {playerName && (
-            <p className="letter-dear">Dear {playerName}，犹豫了很久，还是写了：</p>
+            <p className="letter-dear">Darlin {playerName}, please sign for delivery:</p>
           )}
-          {LEVELS.map((lvl, i) => (
-            <p key={i} className="letter-line" style={{ animationDelay: `${i * 0.6}s` }}>
-              {lvl.emoji} {lvl.letterLine}
-            </p>
-          ))}
-          <p className="letter-sign" style={{ animationDelay: `${LEVELS.length * 0.6}s` }}>
+          <div className="letter-content-area" key={activeLetter}>
+            <p className="letter-desc">{currentLvl.emoji} {currentLvl.desc}</p>
+            <p className="letter-reveal">{currentLvl.reveal}</p>
+            <p className="letter-line">{currentLvl.letterLine}</p>
+          </div>
+          <p className="letter-sign">
             —— 你的小蛇 🐍💕
           </p>
+        </div>
+        <div className="letter-envelopes">
+          {LEVELS.map((lvl, i) => (
+            <button
+              key={i}
+              className={`letter-envelope${i === activeLetter ? ' active' : ''}`}
+              onClick={() => setActiveLetter(i)}
+              style={{ borderColor: lvl.color }}
+            >
+              <span className="envelope-emoji">{lvl.emoji}</span>
+            </button>
+          ))}
         </div>
         <div className="level-clear-buttons">
           <button className="restart-btn letter-close-btn" onClick={onClose}>
@@ -220,6 +245,7 @@ function ChapterIntro({ level, onStart }) {
         <h2 className="chapter-title">{lvl.chapterName}</h2>
         <p className="chapter-en">{lvl.chapterEn}</p>
         <p className="chapter-desc">{lvl.desc}</p>
+        <p className="chapter-desc-hint">{lvl.descHint}</p>
         <button className="restart-btn" onClick={onStart}>
           开始 →
         </button>
@@ -350,6 +376,7 @@ function App() {
     ) {
       setGameOver(true)
       setIsRunning(false)
+      stopBGM()
       const finalScore = scoreRef.current
       if (finalScore > highScore) {
         setHighScore(finalScore)
@@ -362,6 +389,7 @@ function App() {
     if (currentSnake.some((seg) => seg.x === newHead.x && seg.y === newHead.y)) {
       setGameOver(true)
       setIsRunning(false)
+      stopBGM()
       const finalScore = scoreRef.current
       if (finalScore > highScore) {
         setHighScore(finalScore)
@@ -391,6 +419,8 @@ function App() {
             setLevelComplete(true)
             setIsRunning(false)
             setShowReveal(true)
+            stopBGM()
+            playHeartbeatBurst()
             return next
           }
         }
@@ -504,10 +534,12 @@ function App() {
   }
 
   const beginLevel = () => {
+    resumeAudio()
     setGamePhase('playing')
     const firstFood = getNextLevelFood(snake, eatenPoints, currentLevel.points)
     if (firstFood) setFood(firstFood)
     setIsRunning(true)
+    startBGM()
   }
 
   const goNextLevel = () => {
@@ -517,6 +549,7 @@ function App() {
       setLevelComplete(false)
       setShowReveal(false)
       setShowLevelPanel(false)
+      stopBGM()
       return
     }
     const newSnake = [{ x: 10, y: 14 }, { x: 9, y: 14 }, { x: 8, y: 14 }]
@@ -571,6 +604,8 @@ function App() {
   }
 
   const goHome = () => {
+    stopBGM()
+    stopHeartbeat()
     const newSnake = [{ x: 10, y: 14 }, { x: 9, y: 14 }, { x: 8, y: 14 }]
     setSnake(newSnake)
     setDirection(Direction.RIGHT)
