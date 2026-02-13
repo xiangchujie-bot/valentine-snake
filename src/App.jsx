@@ -23,12 +23,12 @@ const LEVELS = [
   {
     emoji: '💖',
     chapter: 'Chapter I',
-    chapterName: '心之所向',
-    chapterEn: 'Where the Heart Goes',
-    desc: '星光在闪烁，收集它们，看看藏着什么…',
-    reveal: '原来是一颗心 —— 每个人心里，都住着一份柔软',
-    revealEn: 'A heart — everyone carries a softness within',
-    letterLine: '旅程的起点，是学会对世界心动',
+    chapterName: '心动信号',
+    chapterEn: 'First Flutter',
+    desc: '有些光芯在闪，像不像谁的眼睛…',
+    reveal: '一颗心 —— 有人偷偷藏了一份心动，你发现了吗？',
+    revealEn: 'A heart — someone hid a secret crush, did you notice?',
+    letterLine: '有些心动，从一个眼神开始，就再也收不回来',
     speed: 160,
     color: '#ff4081',
     points: [
@@ -43,12 +43,12 @@ const LEVELS = [
   {
     emoji: '🌹',
     chapter: 'Chapter II',
-    chapterName: '花开有时',
-    chapterEn: 'A Time to Bloom',
-    desc: '继续前行，有什么正在悄悄绽放…',
-    reveal: '一朵玫瑰 —— 献给每一个认真生活的人',
-    revealEn: 'A rose — for everyone who lives with heart',
-    letterLine: '认真生活的人，值得世间所有温柔',
+    chapterName: '暗号纽放',
+    chapterEn: 'A Rose in Secret',
+    desc: '有什么在悄悄绽放，像某个人的心思…',
+    reveal: '一朵玫瑰 —— 有些话不说出口，就折成了花',
+    revealEn: 'A rose — some words left unsaid become flowers',
+    letterLine: '想送你一朵花，又怕你猜到我的心思',
     speed: 150,
     color: '#e91e63',
     points: [
@@ -62,12 +62,12 @@ const LEVELS = [
   {
     emoji: '💕',
     chapter: 'Chapter III',
-    chapterName: '四字心语',
-    chapterEn: 'Four Letters',
-    desc: '快要到了，这一关藏着一个秘密…',
-    reveal: 'L-O-V-E —— 四个字母，是世上最温暖的咒语',
-    revealEn: 'Four letters — the warmest spell in the world',
-    letterLine: '爱不是占有，是每一个平凡日子里的闪光',
+    chapterName: '欲言又止',
+    chapterEn: 'Almost Said It',
+    desc: '这一关藏着一句话，你敢不敢听…',
+    reveal: 'L-O-V-E —— 想说一万次，每次都假装不经意',
+    revealEn: 'L-O-V-E — wanted to say it a thousand times, always pretending not to',
+    letterLine: '有四个字母到了嘴边，又被心跳声压了回去',
     speed: 140,
     color: '#c44dff',
     points: [
@@ -80,12 +80,12 @@ const LEVELS = [
   {
     emoji: '💍',
     chapter: 'Chapter IV',
-    chapterName: '未来可期',
-    chapterEn: 'A Beautiful Tomorrow',
-    desc: '最后一章，答案即将揭晓…',
-    reveal: '一枚戒指 —— 是对美好未来的小小期许',
-    revealEn: 'A ring — a quiet wish for a beautiful tomorrow',
-    letterLine: '愿你被这世界温柔以待，今天，明天，每一天',
+    chapterName: '小小约定',
+    chapterEn: 'A Little Promise',
+    desc: '最后一关，有人在等你的答案…',
+    reveal: '一枚戒指 —— 不是承诺，是想和你多走一步的勇气',
+    revealEn: 'A ring — not a promise, just the courage to take one more step with you',
+    letterLine: '不敢说永远，但想和你多走一步，再多一步',
     speed: 130,
     color: '#ffd700',
     points: [
@@ -182,10 +182,10 @@ function LoveLetter({ playerName, onClose, onScreenshot }) {
   return (
     <div className="overlay letter-overlay">
       <div className="letter-card">
-        <div className="letter-header">💌 A Letter From This Journey</div>
+        <div className="letter-header">💌 A Letter Left Unsaid</div>
         <div className="letter-body">
           {playerName && (
-            <p className="letter-dear">Dear {playerName}，这封信写给此刻的你：</p>
+            <p className="letter-dear">Dear {playerName}，这封信我写了很久：</p>
           )}
           {LEVELS.map((lvl, i) => (
             <p key={i} className="letter-line" style={{ animationDelay: `${i * 0.6}s` }}>
@@ -193,7 +193,7 @@ function LoveLetter({ playerName, onClose, onScreenshot }) {
             </p>
           ))}
           <p className="letter-sign" style={{ animationDelay: `${LEVELS.length * 0.6}s` }}>
-            —— 这条小蛇，和它走过的四季 🐍✨
+            —— 那个不敢开口的人，留 🐍💗
           </p>
         </div>
         <div className="level-clear-buttons">
@@ -587,41 +587,27 @@ function App() {
   }
 
   const takeScreenshot = async () => {
-    const el = document.querySelector('.game-container')
-    if (!el) return
     try {
-      const canvas = await html2canvas(el, {
+      const canvas = await html2canvas(document.body, {
         backgroundColor: '#0d0614',
+        width: window.innerWidth,
+        height: window.innerHeight,
+        windowWidth: window.innerWidth,
+        windowHeight: window.innerHeight,
         scale: 2,
         useCORS: true,
-        allowTaint: true,
+        logging: false,
       })
-      canvas.toBlob((blob) => {
-        if (!blob) return
-        const url = URL.createObjectURL(blob)
-        // try download first (works on desktop)
-        const link = document.createElement('a')
-        link.download = 'valentine-snake.png'
-        link.href = url
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        // also open in new tab as fallback (mobile: long-press to save)
-        setTimeout(() => {
-          const w = window.open('')
-          if (w) {
-            w.document.write(
-              `<html><head><title>Valentine Snake</title><meta name="viewport" content="width=device-width,initial-scale=1"></head>` +
-              `<body style="margin:0;background:#0d0614;display:flex;justify-content:center;align-items:center;min-height:100vh">` +
-              `<img src="${url}" style="max-width:100%;height:auto"/></body></html>`
-            )
-            w.document.close()
-          }
-        }, 300)
-      }, 'image/png')
+      const dataUrl = canvas.toDataURL('image/png')
+      // desktop: trigger download
+      const link = document.createElement('a')
+      link.download = 'valentine-snake.png'
+      link.href = dataUrl
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     } catch (err) {
       console.error('Screenshot failed:', err)
-      alert('截图失败，请尝试手动截屏')
     }
   }
 
@@ -826,10 +812,10 @@ function App() {
               <div className="all-complete-emojis">💖🌹💕💍</div>
               <h2>✨ 旅程终章 ✨</h2>
               {playerName && (
-                <p className="all-complete-name">{playerName}，这段旅程为你而写</p>
+                <p className="all-complete-name">{playerName}，这些都是想对你说的</p>
               )}
-              <p className="all-complete-msg">四个故事，一封写给生活的情书</p>
-              <p className="all-complete-en">Four stories, a love letter to life</p>
+              <p className="all-complete-msg">四个故事，藏着一个不敢说出口的秘密</p>
+              <p className="all-complete-en">Four stories, one secret I never dared to tell</p>
               <p className="final-score">最终得分：{score}</p>
               {score >= highScore && score > 0 && (
                 <p className="new-record">🎉 新纪录！</p>
