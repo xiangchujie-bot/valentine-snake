@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react'
+import html2canvas from 'html2canvas'
 import './App.css'
 
 const BOARD_SIZE = 20
-const CELL_SIZE = 28
+const BASE_CELL_SIZE = 28
 const MIN_SPEED = 60
+
+function calcCellSize() {
+  const maxWidth = Math.min(window.innerWidth - 32, 560)
+  return Math.min(BASE_CELL_SIZE, Math.floor(maxWidth / BOARD_SIZE))
+}
 const SPEED_INCREMENT = 3
 
 const Direction = {
@@ -172,7 +178,7 @@ function Petals() {
 }
 
 /* ── Love Letter overlay ── */
-function LoveLetter({ playerName, onClose }) {
+function LoveLetter({ playerName, onClose, onScreenshot }) {
   return (
     <div className="overlay letter-overlay">
       <div className="letter-card">
@@ -190,9 +196,14 @@ function LoveLetter({ playerName, onClose }) {
             —— 你的小蛇 🐍💕
           </p>
         </div>
-        <button className="restart-btn letter-close-btn" onClick={onClose}>
-          收下这封信 💌
-        </button>
+        <div className="level-clear-buttons">
+          <button className="restart-btn letter-close-btn" onClick={onClose}>
+            收下这封信 💌
+          </button>
+          <button className="restart-btn secondary-btn" onClick={onScreenshot}>
+            📸 截图分享
+          </button>
+        </div>
       </div>
     </div>
   )
@@ -227,6 +238,15 @@ function App() {
     { x: 9, y: 14 },
     { x: 8, y: 14 },
   ]
+
+  /* ── responsive cell size ── */
+  const [cellSize, setCellSize] = useState(calcCellSize)
+
+  useEffect(() => {
+    const onResize = () => setCellSize(calcCellSize())
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   /* ── game state ── */
   const [snake, setSnake] = useState(initialSnake)
@@ -282,8 +302,9 @@ function App() {
 
   /* ── spawn particles on eat ── */
   const spawnParticles = useCallback((cellX, cellY, color) => {
-    const cx = cellX * CELL_SIZE + CELL_SIZE / 2
-    const cy = cellY * CELL_SIZE + CELL_SIZE / 2
+    const cs = cellSize
+    const cx = cellX * cs + cs / 2
+    const cy = cellY * cs + cs / 2
     const newP = Array.from({ length: 8 }, () => {
       const angle = Math.random() * Math.PI * 2
       const dist = 20 + Math.random() * 30
@@ -300,7 +321,7 @@ function App() {
     setTimeout(() => {
       setParticles((prev) => prev.filter((p) => !newP.includes(p)))
     }, 600)
-  }, [])
+  }, [cellSize])
 
   /* ── moveSnake ── */
   const moveSnake = useCallback(() => {
@@ -314,8 +335,23 @@ function App() {
 
     const head = currentSnake[0]
     const newHead = {
-      x: (head.x + currentDirection.x + BOARD_SIZE) % BOARD_SIZE,
-      y: (head.y + currentDirection.y + BOARD_SIZE) % BOARD_SIZE,
+      x: head.x + currentDirection.x,
+      y: head.y + currentDirection.y,
+    }
+
+    // 撞墙检测
+    if (
+      newHead.x < 0 || newHead.x >= BOARD_SIZE ||
+      newHead.y < 0 || newHead.y >= BOARD_SIZE
+    ) {
+      setGameOver(true)
+      setIsRunning(false)
+      const finalScore = scoreRef.current
+      if (finalScore > highScore) {
+        setHighScore(finalScore)
+        localStorage.setItem('snakeHighScore', finalScore.toString())
+      }
+      return
     }
 
     // 撞自己检测
@@ -530,6 +566,40 @@ function App() {
     setIsRunning(false)
   }
 
+  const goHome = () => {
+    const newSnake = [{ x: 10, y: 14 }, { x: 9, y: 14 }, { x: 8, y: 14 }]
+    setSnake(newSnake)
+    setDirection(Direction.RIGHT)
+    lastDirectionRef.current = Direction.RIGHT
+    setGameOver(false)
+    setScore(0)
+    setLevel(0)
+    setSpeed(LEVELS[0].speed)
+    setTrail([])
+    setEatenPoints(new Set())
+    setLevelComplete(false)
+    setAllComplete(false)
+    setShowReveal(false)
+    setShowLevelPanel(false)
+    setShowLetter(false)
+    setGamePhase('welcome')
+    setIsRunning(false)
+  }
+
+  const takeScreenshot = async () => {
+    const el = document.querySelector('.game-container')
+    if (!el) return
+    try {
+      const canvas = await html2canvas(el, { backgroundColor: '#0d0614', scale: 2 })
+      const link = document.createElement('a')
+      link.download = 'valentine-snake.png'
+      link.href = canvas.toDataURL()
+      link.click()
+    } catch (err) {
+      console.error('Screenshot failed:', err)
+    }
+  }
+
   /* ── virtual joystick ── */
   const handleJoystick = (dir) => {
     if (!isRunning) return
@@ -596,8 +666,8 @@ function App() {
         <div
           className="board"
           style={{
-            gridTemplateColumns: `repeat(${BOARD_SIZE}, ${CELL_SIZE}px)`,
-            gridTemplateRows: `repeat(${BOARD_SIZE}, ${CELL_SIZE}px)`,
+            gridTemplateColumns: `repeat(${BOARD_SIZE}, ${cellSize}px)`,
+            gridTemplateRows: `repeat(${BOARD_SIZE}, ${cellSize}px)`,
           }}
         >
           {Array.from({ length: BOARD_SIZE * BOARD_SIZE }).map((_, i) => {
@@ -690,6 +760,9 @@ function App() {
               <button className="restart-btn" onClick={() => setIsRunning(true)}>
                 继续游戏
               </button>
+              <button className="restart-btn secondary-btn" onClick={goHome}>
+                回到首页
+              </button>
             </div>
           </div>
         )}
@@ -711,6 +784,14 @@ function App() {
                 </button>
                 <button className="restart-btn secondary-btn" onClick={restartCurrentLevel}>
                   再玩一次
+                </button>
+              </div>
+              <div className="level-clear-buttons">
+                <button className="restart-btn secondary-btn" onClick={takeScreenshot}>
+                  📸 截图分享
+                </button>
+                <button className="restart-btn secondary-btn" onClick={goHome}>
+                  回到首页
                 </button>
               </div>
               <p className="hint">按空格键 / 回车继续</p>
@@ -737,8 +818,16 @@ function App() {
                 <button className="restart-btn" onClick={() => setShowLetter(true)}>
                   打开情书 💌
                 </button>
+                <button className="restart-btn secondary-btn" onClick={takeScreenshot}>
+                  📸 截图分享
+                </button>
+              </div>
+              <div className="level-clear-buttons">
                 <button className="restart-btn secondary-btn" onClick={restartGame}>
                   重新开始
+                </button>
+                <button className="restart-btn secondary-btn" onClick={goHome}>
+                  回到首页
                 </button>
               </div>
             </div>
@@ -747,7 +836,7 @@ function App() {
 
         {/* ── Love letter ── */}
         {showLetter && (
-          <LoveLetter playerName={playerName} onClose={() => setShowLetter(false)} />
+          <LoveLetter playerName={playerName} onClose={() => setShowLetter(false)} onScreenshot={takeScreenshot} />
         )}
 
         {/* ── Game over ── */}
@@ -771,6 +860,9 @@ function App() {
                   从头开始
                 </button>
               </div>
+              <button className="restart-btn secondary-btn" onClick={goHome} style={{marginTop:'8px'}}>
+                回到首页
+              </button>
               <p className="hint">按空格键重新开始</p>
             </div>
           </div>
@@ -787,6 +879,15 @@ function App() {
         </div>
         <button className="joy-btn joy-down" onTouchStart={() => handleJoystick('down')}>↓</button>
       </div>
+
+      {/* ── Footer ── */}
+      <footer className="game-footer">
+        <span>💘 Designed & Developed by <strong>Chujie_X</strong></span>
+        <span> | </span>
+        <a href="https://github.com/xiangchujie-bot" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span> | </span>
+        <span>Valentine's Day 2026</span>
+      </footer>
     </div>
   )
 }

@@ -763,27 +763,137 @@
   }
 }
 
-/* ── Responsive tweaks ── */
+/* ══════════════════════════════════════ */
+/*              Footer                   */
+/* ══════════════════════════════════════ */
+
+.game-footer {
+  margin-top: 20px;
+  padding: 12px 0;
+  font-size: 0.8rem;
+  color: #9a6a80;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.game-footer strong {
+  color: #ff6b9d;
+}
+
+.game-footer a {
+  color: #c44dff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.game-footer a:hover {
+  color: #ff6b9d;
+  text-decoration: underline;
+}
+
+/* ══════════════════════════════════════ */
+/*          Responsive (Mobile)          */
+/* ══════════════════════════════════════ */
+
 @media (max-width: 600px) {
+  .game-container {
+    padding: 10px 8px;
+    gap: 10px;
+  }
   .game-title {
-    font-size: 1.6rem;
-    letter-spacing: 3px;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
   }
-  .score-board {
-    gap: 6px;
+  .level-indicator {
+    gap: 14px;
   }
-  .score-item {
-    padding: 6px 12px;
-  }
-  .score-value {
+  .level-emoji {
     font-size: 1.3rem;
   }
+  .score-board {
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .score-item {
+    padding: 4px 10px;
+    border-radius: 10px;
+  }
+  .score-label {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+  }
+  .score-value {
+    font-size: 1.1rem;
+  }
+  .board-wrapper {
+    border-radius: 10px;
+  }
+  .board {
+    border-radius: 10px;
+    border-width: 2px;
+  }
+  .food-emoji {
+    font-size: 14px;
+  }
   .game-over-panel {
-    padding: 24px 20px;
+    padding: 20px 16px;
     max-width: 90vw;
+    border-radius: 14px;
+  }
+  .game-over-panel h2 {
+    font-size: 1.4rem;
+  }
+  .final-score {
+    font-size: 1rem;
+  }
+  .restart-btn {
+    padding: 10px 28px;
+    font-size: 1rem;
+  }
+  .level-clear-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .chapter-card {
+    padding: 24px 20px;
+  }
+  .chapter-emoji-big {
+    font-size: 3rem;
+  }
+  .chapter-title {
+    font-size: 1.5rem;
   }
   .letter-card {
-    padding: 24px 20px;
+    padding: 20px 16px;
     max-width: 90vw;
+  }
+  .letter-header {
+    font-size: 1.4rem;
+  }
+  .letter-line {
+    font-size: 0.95rem;
+  }
+  .welcome-emoji {
+    font-size: 2.5rem;
+  }
+  .name-input {
+    max-width: 200px;
+    padding: 10px 14px;
+    font-size: 1rem;
+  }
+  .game-footer {
+    font-size: 0.7rem;
+    margin-top: 12px;
+  }
+  .joy-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 1.2rem;
+  }
+  .joy-center {
+    width: 46px;
+    height: 46px;
+    font-size: 1.3rem;
   }
 }
