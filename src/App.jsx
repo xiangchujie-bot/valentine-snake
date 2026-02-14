@@ -365,24 +365,8 @@ function App() {
 
     const head = currentSnake[0]
     const newHead = {
-      x: head.x + currentDirection.x,
-      y: head.y + currentDirection.y,
-    }
-
-    // 撞墙检测
-    if (
-      newHead.x < 0 || newHead.x >= BOARD_SIZE ||
-      newHead.y < 0 || newHead.y >= BOARD_SIZE
-    ) {
-      setGameOver(true)
-      setIsRunning(false)
-      stopBGM()
-      const finalScore = scoreRef.current
-      if (finalScore > highScore) {
-        setHighScore(finalScore)
-        localStorage.setItem('snakeHighScore', finalScore.toString())
-      }
-      return
+      x: (head.x + currentDirection.x + BOARD_SIZE) % BOARD_SIZE,
+      y: (head.y + currentDirection.y + BOARD_SIZE) % BOARD_SIZE,
     }
 
     // 撞自己检测

@@ -366,6 +366,7 @@
   padding: 14px 42px;
   font-size: 1.15rem;
   font-weight: 700;
+  white-space: nowrap;
   color: #fff;
   background: linear-gradient(135deg, #ff6b9d, #c44dff);
   border: none;
