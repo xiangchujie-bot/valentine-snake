@@ -1,21 +1,60 @@
 # 💘 Valentine Snake
-> Some words are hard to say, so I made them into a game
 
-## This is more than just Snake
+**A little journey about love**
 
-Four chapters, hiding four feelings:
-- 💖 A heartbeat caught in the act
-- 🌹 A flower, pretending it was random
-- 💕 Words almost said
-- 💍 A little promise
+🔗 **[Play now →](https://valentine-snake.vercel.app)**
 
-With every glowing dot you collect, you get closer to the truth
-At the end, there's a letter waiting for you
+---
 
-## What makes it special
+## What is this?
 
-- Enter their name for a personalized experience
-- Each level's pattern carries meaning
-- There's a surprise at the finale
+A snake game. With a secret.
 
-—— A love letter written in code, something like that
+Each level hides a pattern you can't see while playing.
+Finish the level, and it reveals itself — one dot at a time.
+
+Four chapters. Four hidden messages.
+A text field at the start that changes the ending.
+
+> *Some things only make sense after you've walked every step.*
+
+## How it was made
+
+A product manager who can't code + AI pair programming.
+
+- **Human**: product design, level planning, emotional arc, copywriting
+- **AI**: code implementation, iteration, debugging
+- **Tool**: Claude Opus × Windsurf
+
+No traditional coding skills. Just a clear vision and a few late nights.
+
+## Features
+
+- 🐍 Classic snake with narrative structure
+- 🔮 Hidden pattern reveal with staggered animation
+- 💌 Personalized ending with name input
+- 🎵 Ambient BGM + heartbeat sound design
+- 📱 Mobile-first with touch controls
+- 4 chapters, one story arc
+
+## Tech
+
+React · Vite · CSS animations · Web Audio API · LocalStorage
+
+## Run locally
+```bash
+git clone https://github.com/xiangchujie-bot/valentine-snake.git
+cd valentine-snake
+npm install
+npm run dev
+```
+
+## License
+
+MIT
+
+---
+
+*Made with 💖 by [Chujie_X](https://github.com/xiangchujie-bot)*
+*Powered by Claude Opus 4.6 × Windsurf*
+*Valentine's Day 2026*
