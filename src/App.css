@@ -780,24 +780,24 @@
   display: none;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   margin-top: 16px;
 }
 
 .joy-mid {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .joy-btn {
-  width: 54px;
-  height: 54px;
-  border-radius: 14px;
-  border: 2px solid rgba(255, 107, 157, 0.3);
-  background: rgba(255, 255, 255, 0.06);
+  width: clamp(56px, 14vw, 72px);
+  height: clamp(56px, 14vw, 72px);
+  border-radius: 16px;
+  border: 2px solid rgba(255, 107, 157, 0.35);
+  background: rgba(255, 255, 255, 0.08);
   color: #ff6b9d;
-  font-size: 1.4rem;
+  font-size: clamp(1.3rem, 4vw, 1.8rem);
   font-weight: 700;
   cursor: pointer;
   display: flex;
@@ -809,17 +809,17 @@
 }
 
 .joy-btn:active {
-  background: rgba(255, 107, 157, 0.2);
-  transform: scale(0.92);
+  background: rgba(255, 107, 157, 0.25);
+  transform: scale(0.9);
 }
 
 .joy-center {
-  width: 54px;
-  height: 54px;
+  width: clamp(56px, 14vw, 72px);
+  height: clamp(56px, 14vw, 72px);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 
 /* Show joystick on touch devices */
@@ -1112,14 +1112,14 @@
   }
   /* joystick */
   .joy-btn {
-    width: 42px;
-    height: 42px;
-    font-size: 1.1rem;
-    border-radius: 10px;
+    width: clamp(50px, 13vw, 64px);
+    height: clamp(50px, 13vw, 64px);
+    font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+    border-radius: 14px;
   }
   .joy-center {
-    width: 42px;
-    height: 42px;
-    font-size: 1.2rem;
+    width: clamp(50px, 13vw, 64px);
+    height: clamp(50px, 13vw, 64px);
+    font-size: 1.5rem;
   }
 }
